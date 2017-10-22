@@ -1,0 +1,53 @@
+<%= form_for @listing do |listing|%>
+	<div class="listing_input">
+	  <%= listing.label :place_type %>
+	  <%= listing.text_field :place_type, type: "text" %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :accomodation_type %>
+	  <%= listing.text_field :accomodation_type, type: "text" %>
+	</div>
+	
+	<div class="listing_input">
+	  <%= listing.label :address %>
+	  <%= listing.text_field :address, type: "text" %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :city %>
+	  <%= listing.text_field :city, type: "text" %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :country %>
+	  <%= listing.text_field :country, type: "text" %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :capacity %>
+	  <%= listing.text_field :capacity, type: "integer" %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :zipcode %>
+	  <%= listing.text_field :zipcode, type: "text" %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :accomodation_type %>
+	  <%= listing.text_field :accomodation_type, type: "integer" %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :description %>
+	  <%= listing.text_field :description, type: 'text' %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :listing_name %>
+	  <%= listing.text_field :listing_name, type: 'text' %>
+	</div>
+
+    <%= listing.submit %>
+<% end %>

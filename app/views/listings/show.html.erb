@@ -1,0 +1,43 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Accomodation_type</h3>
+  </div>
+  <div class="panel-body">
+    <%= @listing.accomodation_type %>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Capacity</h3>
+  </div>
+  <div class="panel-body">
+    <%=@listing.capacity%>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Description</h3>
+  </div>
+  <div class="panel-body">
+    <%=@listing.description%>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Listing Name</h3>
+  </div>
+  <div class="panel-body">
+    <%=@listing.listing_name%>
+  </div>
+</div>
+  <%= @listing.place_type %>
+  <%= @listing.address %>
+  <%= @listing.city %>
+  <%= @listing.country %>
+  <%= @listing.zipcode %>
+  <%= @listing.price %>
+
+<%= link_to 'edit', edit_listing_path(@listing)%>

@@ -1,0 +1,6 @@
+<h1>hello</h1>
+
+<% @listing.each do |x| %>
+  <p><%= link_to x.listing_name, listing_path(x)%></p>
+<%end%>
+

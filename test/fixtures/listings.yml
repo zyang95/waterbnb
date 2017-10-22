@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: 
+  accomodation_type: MyString
+  capacity: 1
+  description: MyString
+  listing_name: MyString
+
+two:
+  user: 
+  accomodation_type: MyString
+  capacity: 1
+  description: MyString
+  listing_name: MyString
