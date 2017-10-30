@@ -1,43 +1,121 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Accomodation_type</h3>
+<div class="jumbotron">
+    <% image = @listing.listing_images%>
+    <% if image[0] == nil %>
+      <%= image_tag("/assets/no-image-box.png", :class => "jumbo-img") %>
+    <% else %>
+      <%= image_tag image[0].jumbo, :class => "jumbo-img"%>
+    <% end %>
+</div>
+
+<div class="container">
+  <div class= "subcontainer-1">
+    <div class = "sub-box-line">
+      <div class= "row" id="listing_controls">
+        <div class="col-md-4">
+          <a class= "preview-all-listing"> View Photos</a>
+        </div>
+
+        <% if signed_in? %>
+          <div class="col-md-3">
+            <% if @listing.user_id == current_user.id %>
+              <%= link_to "edit listings", edit_listing_path, :class => "waterbnb_button"%>
+            <% end %>
+          </div>
+
+          <div class="col-md-3">
+            <% if !current_user.customer? && @listing.approval_status == false %>
+              <%= link_to "Approve", approve_path(params[:id]), :class => "waterbnb_button"%>
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+    
+    <div class = "sub-box-line">
+      <h1><%=@listing.description%></h1>
+    
+      <div class = "row" >
+        <div class="col-md-9">
+          <p><%= @listing.accomodation_type %> . <%= @listing.city %></p>
+          <p>Hosted by <%= @listing.user.first_name %></p>
+          <p><span class="glyphicon glyphicon-user" aria-hidden="true"></span><%=@listing.capacity%> guests</p>
+        </div>
+
+        <div class="col-md-3">
+          <div class="profile-icon">
+            <% profile_img = @listing.user.profile %>
+            <% if profile_img.nil? %> 
+              <%= image_tag("/assets/no-image-box.png")%>
+            <% else %>
+              <%= image_tag profile_img.profile_icon, :class => "profile-icon-image"%>
+            <% end %>
+          </div>
+        </div>
+      </div>
+          <p><%=@listing.description%></p>  
+    </div>
+
+    <div class = "sub-box-line">
+      <h2>Prices</h2>
+      <p>Cost of room per night:  $<%= @listing.price %></p>
+    </div>
+
+    <div class = "carousel-box">
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+      <!--   <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol> -->
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          <% number = 0 %>
+          <% @listing.listing_images.each do |t|%>
+            <% if number == 0%>
+              <div class="item active">
+                <%= image_tag t.jumbo %>
+              </div>
+              <% number += 1%>
+            <% else %>
+              <div class="item">
+                <%= image_tag t.jumbo %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
   </div>
-  <div class="panel-body">
-    <%= @listing.accomodation_type %>
+
+  <div class = "subcontainer-2">
+    <div class = "subcontainer-2-box">
+      <h3 id = "subcontainer-2-header">RM <%= @listing.price%> per night</h3>
+      <div class = "sub-box-line"></div>
+      <%= render "reservations/form" %>
+      <h3><%= @error %></h3>
+    </div>
   </div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Capacity</h3>
-  </div>
-  <div class="panel-body">
-    <%=@listing.capacity%>
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Description</h3>
-  </div>
-  <div class="panel-body">
-    <%=@listing.description%>
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Listing Name</h3>
-  </div>
-  <div class="panel-body">
-    <%=@listing.listing_name%>
-  </div>
-</div>
-  <%= @listing.place_type %>
+<%= @listing.place_type %>
   <%= @listing.address %>
   <%= @listing.city %>
   <%= @listing.country %>
   <%= @listing.zipcode %>
   <%= @listing.price %>
 
-<%= link_to 'edit', edit_listing_path(@listing)%>
+
+

@@ -5,6 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'fog'
+gem "mini_magick"
+gem 'carrierwave'
+gem 'will_paginate', '~> 3.1.0'
 gem 'faker', :git => 'git://github.com/stympy/faker.git', :branch => 'master'
 gem 'filterrific'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -41,6 +45,10 @@ gem "figaro"
 #facebook login
 gem "omniauth" 
 gem "omniauth-facebook"
+
+gem 'momentjs-rails'
+gem 'bootstrap3-datetimepicker-rails'
+gem 'braintree'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

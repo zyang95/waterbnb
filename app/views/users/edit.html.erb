@@ -1,25 +1,34 @@
 
-<%= form_for @user do |form| %>
-    <div class="text_field">
-		<%= form.label :first_name %>
-		<%= form.text_field :first_name, type: "text" %>
-	</div>
+	<%= form_for @user do |form| %>
+		 <div class="text_field">
 
-	<div class="text_field">
-		<%= form.label :last_name %>
-		<%= form.text_field :last_name, type: "text" %>
-	</div>
+		 	<%= image_tag(@user.profile) if @user.profile? %>
+			<p><%= form.label :profile %>
+			<%= form.file_field :profile %></p>	
+			<%= form.hidden_field :profile_cache %>
+		</div>
 
-	<div class="text-field">
-		<%= form.label :email %>
-		<%= form.text_field :email, type: 'email' %>
-	</div>
+	    <div class="text_field">
+			<%= form.label :first_name %>
+			<%= form.text_field :first_name, type: "text" %>
+		</div>
 
-    <div class="submit-field">
-      <%= form.submit %>
-    </div>
+		<div class="text_field">
+			<%= form.label :last_name %>
+			<%= form.text_field :last_name, type: "text" %>
+		</div>
 
-    <div class="other-links">
-      <%= link_to t(".sign_in"), sign_in_path %>
-    </div>
-<% end %>
+		<div class="text-field">
+			<%= form.label :email %>
+			<%= form.text_field :email, type: 'email' %>
+		</div>
+
+	    <div class="submit-field">
+	      <%= form.submit %>
+	    </div>
+
+	    <div class="other-links">
+	      <%= link_to t(".sign_in"), sign_in_path %>
+	    </div>
+	<% end %>
+

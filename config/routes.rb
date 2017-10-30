@@ -2,9 +2,11 @@ Rails.application.routes.draw do
 
 #this section to deal with routing pages
 
-root 'welcome#index'
+root 'listings#index'
 
-#end of section routing
+#payment routes
+get 'reservations/:id/paypal' => 'reservations#paypal', as: 'paypal_form'
+post 'reservations/:id/paypal_checkout' => 'reservations#paypal_checkout', as: 'paypal_checkout'
 
 
 
@@ -20,22 +22,31 @@ root 'welcome#index'
       only: [:create, :edit, :update]
   end
 
-  resources :users, only: [:edit, :update]
+  resources :users, only: [:edit, :update, :show]
 
   get "/sign_in" => "clearance/sessions#new", as: "sign_in"
   delete "/sign_out" => "clearance/sessions#destroy", as: "sign_out"
   get "/sign_up" => "clearance/users#new", as: "sign_up"
+  get "/users/:id/listings" => "users#listings", as: "user_listings"
+
 
 # end of clearance authecation
  get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 
-# end of usercreation/authentication
+# superadmin routes
+  get "/users/:id/super_admin" => "users#super_admin", as: "super_admin"
+
+  get "/listings/:id/approve" => "listings#approval", as: "approve"
+
 
 
 #routes for listing
  
- resources :listings
- resources :reservations
+resources :listings
+resources :reservations, only: [:new, :index, :create, :destroy]
+
+
+get "/users/:id/reservations" => "users#reservations", as: "user_reservations"
 
 #end
   

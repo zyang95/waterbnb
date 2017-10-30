@@ -1,0 +1,10 @@
+<div class="alert alert-success">
+	<% flash.each do |key, value| %>
+      <div class="<%= flash_class(key) %>">
+            <%= value %>
+      </div>
+<% end %>
+
+<p><%= "Name:     " + @user.first_name + @user.last_name %></p>	
+<p><%= "Email :   " + @user.email %></p>
+<%= link_to "Edit Profile", edit_user_path(current_user) %> 

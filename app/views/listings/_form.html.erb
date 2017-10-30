@@ -1,4 +1,10 @@
 <%= form_for @listing do |listing|%>
+
+	<div class="listing_input">
+	  <%= listing.label :listing_images %>
+	  <%= listing.file_field :listing_images, multiple: true %>
+	</div>
+
 	<div class="listing_input">
 	  <%= listing.label :place_type %>
 	  <%= listing.text_field :place_type, type: "text" %>
@@ -7,6 +13,11 @@
 	<div class="listing_input">
 	  <%= listing.label :accomodation_type %>
 	  <%= listing.text_field :accomodation_type, type: "text" %>
+	</div>
+
+	<div class="listing_input">
+	  <%= listing.label :price %>
+	  <%= listing.text_field :price, type: "integer" %>
 	</div>
 	
 	<div class="listing_input">

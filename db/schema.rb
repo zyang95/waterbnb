@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171022020936) do
+ActiveRecord::Schema.define(version: 20171030041633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,15 +39,20 @@ ActiveRecord::Schema.define(version: 20171022020936) do
     t.string "place_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "approval_status", default: false
+    t.json "listing_images"
     t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
   create_table "reservations", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "listing_id"
-    t.date "reservation_date"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "number_of_guests"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "payment_status", default: false
     t.index ["listing_id"], name: "index_reservations_on_listing_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
@@ -61,6 +66,8 @@ ActiveRecord::Schema.define(version: 20171022020936) do
     t.string "encrypted_password", limit: 128
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
+    t.integer "role", default: 0
+    t.string "profile"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end

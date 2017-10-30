@@ -11,7 +11,7 @@
   <body>
 	
     
-    <nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -24,6 +24,13 @@
       <p class="navbar-brand"><%= link_to "Waterbnb", root_path %></p>
     </div>
 
+      
+    <%= form_tag(listings_path, :method => "get", class: "navbar-form navbar-left") do %>
+    <div class="form-group">
+      <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>
+    </div>
+    <% end %>
+
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
@@ -32,7 +39,12 @@
         <li class="dropdown"> 
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a><%= link_to "Your Listings", listings_path %></a></li>
+              <li><a><%= link_to "Your Listings", user_listings_path(current_user) %></a></li>
+              <li><a><%= link_to "Your profile", user_path(current_user) %></a></li>
+              <li><a><%= link_to "Your Reservations", user_reservations_path(current_user) %></a></li>
+              <% if current_user.superadmin?%>
+                <li><a><%= link_to "Unapproved Listings", super_admin_path(current_user) %></a></li>
+              <% end %>
               <li role="separator" class="divider"></li>
               <li><a><%= link_to "Sign out", sign_out_path, method: :delete %></a></li>
             </ul>

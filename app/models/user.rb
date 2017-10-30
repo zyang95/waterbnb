@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  enum role: [ :customer, :moderator, :superadmin]
+  mount_uploader :profile, ProfileUploader
   include Clearance::User
    has_many :authentications, dependent: :destroy
    has_many :listings, dependent: :destroy

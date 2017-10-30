@@ -1,0 +1,36 @@
+
+<div class = "container">
+	<% if @reservation.present? %>
+		<% @reservation.each_slice(4) do |x| %>
+			<div class = 'row'>
+			<% x.each do |y| %>
+			<% z = y.listing%>
+				<div class = "col-xs-6 col-md-3">
+					<% if z.listing_images.length == 0 %>
+						<div class = "thumbnail">
+							<%= link_to image_tag("/assets/no-image-box.png"), listing_path(z) %>
+							<div class="caption">
+			        			<h3><%= z.listing_name%></h3>
+			        			<h4>Start Date <%= y.start_date %></h4>
+			        			<h4>End Date <%= y.end_date %></h4>
+			        			<h4>Duration <%= (y.end_date - y.start_date).to_i %> days</h4>
+			        			<p><%= z.description%></p>
+			        		</div>
+		        		</div> 
+					<% else %>
+						<div class = "thumbnail">
+							<%= link_to image_tag(z.listing_images[0]), listing_path(z) %>
+							<div class="caption">
+			        			<h3><%= z.listing_name%></h3>
+			        			<p><%= z.description%></p>
+			        		</div>
+			        	</div>
+					<% end %>		
+				</div>
+		  	<% end %>
+			</div>
+		<%end%>
+	<% else %>
+			<p>You have not made any reservations.</p>
+	<% end %>
+</div>

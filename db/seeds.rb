@@ -8,12 +8,14 @@
 require 'faker'
 user = {}
 user['password'] = 'asdf'
+User.create(first_name: "lee", last_name: "tzy yang", password: "a", email: "a@a.com", role: 2)
 
 ActiveRecord::Base.transaction do
   20.times do 
     user['first_name'] = Faker::Name.first_name 
     user['last_name'] = Faker::Name.last_name
     user['email'] = Faker::Internet.email
+    user['role'] = 0
 
     User.create(user)
   end
@@ -39,6 +41,7 @@ ActiveRecord::Base.transaction do
 
     listing['price'] = rand(80..500)
     listing['description'] = Faker::Hipster.sentence
+    listing['approval_status'] = Faker::Boolean.boolean(0.5)
 
 
     listing['user_id'] = uids.sample
