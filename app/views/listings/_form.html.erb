@@ -1,0 +1,76 @@
+<%= form_for @listing do |listing|%>
+	<div class="form-group">
+		<%= listing.label :listing_name %>
+		<%= listing.text_field :listing_name, type: 'text', class: 'form-control' %>
+	</div>
+
+	<div class="form-group">
+		<%= listing.label :listing_images %>
+		<%= listing.file_field :listing_images, multiple: true %>
+	</div>
+		
+	<div class="form-group">
+		<%= listing.label :place_type  %> <br>
+		<%= listing.radio_button :place_type, "shared_room", class: "form-check form-check-inline" %>
+		<%= listing.label :place_type_shared_room, "Shared Room", class:'form-check-label' %>
+		<%= listing.radio_button :place_type, "private_room", class: "form-check form-check-inline" %>
+		<%= listing.label :place_type_private_room, "Private Room" , class:'form-check-label' %>
+		<%= listing.radio_button :place_type, "entire_home", class: "form-check form-check-inline" %>
+		<%= listing.label :place_type_entire_home, "Entire Home/Aparment" , class:'form-check-label' %>
+	</div>
+
+
+	<div class="form-group">
+	  <%= listing.label :price  %>
+	  <%= listing.text_field :price, type: "integer", class: 'form-control' %>
+		<%= @listing.errors[:price][0] %>
+	</div>
+	
+	<div class="form-group">
+	  <%= listing.label :address  %>
+	  <%= listing.text_field :address, type: "text", class: 'form-control' %>
+	</div>
+	
+	<div class = "row">	
+		<div class ="col-md-4">
+			<div class="form-group">
+				<%= listing.label :city  %>
+				<%= listing.text_field :city, type: "text", class: 'form-control' %>
+			</div>
+		</div>
+		
+		<div class ="col-md-4">
+			<div class="form-group">
+				<%= listing.label :country %>
+				<%= listing.text_field :country, type: "text", class: 'form-control' %>
+			</div>
+		</div>
+
+		<div class ="col-md-4">
+			<div class="form-group">
+				<%= listing.label :zipcode %>
+				<%= listing.text_field :zipcode, type: "text", class: 'form-control' %>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="form-group">
+	  <%= listing.label :capacity %>
+	  <%= listing.text_field :capacity, type: "integer", class: 'form-control' %>
+	</div>
+
+	
+
+	<div class="form-group">
+	  <%= listing.label :accomodation_type %>
+	  <%= listing.text_field :accomodation_type, type: "integer", class: 'form-control' %>
+	</div>
+
+	<div class="form-group">
+	  <%= listing.label :description %>
+	  <%= listing.text_field :description, type: 'text', class: 'form-control' %>
+	</div>
+
+	<p><%= listing.submit 'Submit', :class => 'btn btn-primary' %> </p>
+<% end %>

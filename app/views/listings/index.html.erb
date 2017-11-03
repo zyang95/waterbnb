@@ -1,0 +1,38 @@
+<div class = container>
+	<div class="page-header">
+		<h2>Homes</h2>
+	</div>
+	<% if @listing.present? %>
+		<% @listing.each_slice(4) do |x| %>
+			<div class = 'row'>
+			<% x.each do |y| %> 
+				<div class = "col-xs-6 col-md-3">
+					<% if y.listing_images.length == 0 %>
+						<div class = "thumbnail">
+							<%= link_to image_tag("/assets/no-image-box.png"), listing_path(y) %>
+							<div class="caption">
+			        			<h3><%= y.listing_name%></h3>
+			        			<p><%= y.description%></p>
+			        		</div>
+		        		</div>
+					<% else %>
+						<div class = "thumbnail">
+							<%= link_to image_tag(y.listing_images[0]), listing_path(y) %>
+							<div class="caption">
+			        			<h3><%= y.listing_name%></h3>
+			        			<p><%= y.description%></p>
+			        		</div>
+			        	</div>
+					<% end %>		
+				</div>
+		  	<% end %>
+			</div>
+		<%end%>
+		<%= will_paginate @listing %>
+	<% else %>
+  		<p>There are no listings containing the term(s) <%= params[:search] %>.</p>
+	<% end %>
+
+
+</div>
+

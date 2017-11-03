@@ -1,0 +1,87 @@
+<%= form_for @reservation, url: "/reservations/new", method: :get do |reservation|%>
+
+	<div class="reservation_input">
+	  <%= reservation.label :number_of_guests %>
+	  <%= reservation.number_field :number_of_guests, required: true, min: 1 %>
+	</div>
+
+	
+
+    <div class="form-group">
+    	<%= reservation.label :start_date %>
+        <div class='input-group date' id='datetimepicker6'>
+            <%= reservation.text_field :start_date, class: "form-control" , required: true %>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+    	<%= reservation.label :end_date %>
+        <div class='input-group date' id='datetimepicker7'>
+            <%= reservation.text_field :end_date, class: 
+            "form-control", required: true %>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker6').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: "",
+                disabledDates:[ 
+                    <% Reservation.where(listing_id: @listing.id).where( payment_status: true ).each do |t| %>
+                        <% duration = (t.end_date - t.start_date).to_i - 1 %>
+                        <% (0...duration).map do |x| %>
+                          <%= raw "'#{t.start_date + x}', " %>
+                        <% end %>   
+                    <% end %>
+                ]
+            });
+        });
+
+        $(function () {
+            $('#datetimepicker7').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: "",
+                disabledDates:[ 
+                    <% Reservation.where(listing_id: @listing.id ).where(payment_status: true ).each do |t| %>
+                        <% duration = (t.end_date - t.start_date).to_i %>
+                        <% (1...duration).map do |x| %>
+                          <%= raw "'#{t.start_date + x}', " %>
+                        <% end %>   
+                    <% end %>
+                ],
+                useCurrent: false, 
+            });
+        });
+
+        $(function () {
+            $('#datetimepicker6').data("DateTimePicker").minDate(new Date());
+
+            var nextDay = new Date();
+            nextDay.setDate(nextDay.getDate() + 1);
+            $('#datetimepicker7').data("DateTimePicker").minDate(nextDay);
+
+            $("#datetimepicker6").on("dp.change", function (e) {
+                $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                
+            });
+            $("#datetimepicker7").on("dp.change", function (e) {
+                $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+            });
+        });
+    </script>
+
+
+
+	<%= reservation.hidden_field :listing_id %>
+
+	<%= reservation.submit "Make A Reservation" %>
+<% end %>

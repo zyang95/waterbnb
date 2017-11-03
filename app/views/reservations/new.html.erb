@@ -1,0 +1,31 @@
+<div class= 'container'>
+	<div class="page-header">
+		<h2>Booking Confirmation</h2>
+	</div>
+	
+	<h4>This is confirmation for the reservation of <%= @listing.listing_name %></h4>
+	
+	<h4>The total price of the reservation is USD $<%= @listing.price * @duration%><h4>
+
+	<%= form_for @reservation do |reservation|%>
+
+		<div class="reservation_input">
+		  <%= reservation.label :number_of_guests %>
+		  <%= reservation.number_field :number_of_guests, required: true %>
+		</div>
+
+		<div class="reservation_input">
+		  <%= reservation.label :start_date %>
+		  <%= reservation.date_field :start_date, required: true %>
+		</div>
+
+		<div class="reservation_input">
+		  <%= reservation.label :end_date %>
+		  <%= reservation.date_field :end_date, required: true %>
+		</div>
+
+		<%= reservation.hidden_field :listing_id %>
+
+		<%= reservation.submit "You have agreed to the terms and pricing stated above" %>
+	<% end %>
+</div>

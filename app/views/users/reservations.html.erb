@@ -1,0 +1,74 @@
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to 'Profile', user_path(current_user.id) %></li>
+  <li role="presentation"><%= link_to 'Listings', user_listings_path(current_user.id) %></li>
+  <li role="presentation" class="active"><%= link_to 'Reservations', user_reservations_path(current_user.id) %></li>
+</ul>
+
+<div class = "container">
+	<% if @reservation.present? %>
+		<% past_reservation = @reservation.where("? >= end_date", Time.now ) %>
+		<% current_reservation = @reservation.where("end_date > ?", Time.now) %>
+		<div class="page-header">
+  			<h2>Upcoming Reservations</h1>
+		</div>
+		<% if current_reservation.present? %>
+			<% current_reservation.each_slice(4) do |x| %>
+				<div class = 'row'>
+					<% x.each do |y| %>
+					<% z = y.listing%>
+						<div class = "col-xs-6 col-md-3">
+							<div class = "thumbnail">
+								<% if z.listing_images.length == 0 %>
+									<%= link_to image_tag("/assets/no-image-box.png"), listing_path(z) %>
+					        		
+								<% else %>
+									<%= link_to image_tag(z.listing_images[0]), listing_path(z) %>
+						        	
+								<% end %>	
+								<div class="caption">
+				        			<h3><%= z.listing_name%></h3>
+				        			<h4>Start Date <%= y.start_date %></h4>
+				        			<h4>End Date <%= y.end_date %></h4>
+				        			<h4>Duration <%= (y.end_date - y.start_date).to_i %> days</h4>
+				        			<p><%= z.description%></p>
+				        		</div>	
+		        			</div>
+						</div>
+				  	<% end %>
+				</div>
+			<%end%>
+		<% end %> 
+		<div class="page-header">
+  			<h2>Past Reservations</h1>
+		</div>
+		<% if past_reservation.present? %>
+			<% past_reservation.each_slice(4) do |x| %>
+				<div class = 'row'>
+					<% x.each do |y| %>
+					<% z = y.listing%>
+						<div class = "col-xs-6 col-md-3">
+							<div class = "thumbnail">
+								<% if z.listing_images.length == 0 %>
+									<%= link_to image_tag("/assets/no-image-box.png"), listing_path(z) %>
+					        		
+								<% else %>
+									<%= link_to image_tag(z.listing_images[0]), listing_path(z) %>
+						        	
+								<% end %>	
+								<div class="caption">
+				        			<h3><%= z.listing_name%></h3>
+				        			<h4>Start Date <%= y.start_date %></h4>
+				        			<h4>End Date <%= y.end_date %></h4>
+				        			<h4>Duration <%= (y.end_date - y.start_date).to_i %> days</h4>
+				        			<p><%= z.description%></p>
+				        		</div>	
+		        			</div>
+						</div>
+				  	<% end %>
+				</div>
+			<%end%>
+		<% end %> 
+	<% else %>
+			<p>You have not made any reservations.</p>
+	<% end %>
+</div>

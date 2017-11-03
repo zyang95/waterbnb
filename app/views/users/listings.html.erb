@@ -1,0 +1,40 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" ><%= link_to 'Profile', user_path(current_user.id) %></li>
+  <li role="presentation" class="active"><%= link_to 'Listings', user_listings_path(current_user.id) %></li>
+  <li role="presentation"><%= link_to 'Reservations', user_reservations_path(current_user.id) %></li>
+</ul>
+
+<div class="container">
+	<% if signed_in? %>
+
+		<div class="page-header">
+			<h2>Your Listings</h2>
+		</div>
+
+		<% @listings.each_slice(4) do |x| %>
+			<div class = 'row'>
+				<% x.each do |y| %>
+					<div class = "col-xs-6 col-md-3">
+						<div class = "thumbnail">
+							<% if y.listing_images.length == 0 %>
+								<%= link_to image_tag("/assets/no-image-box.png"), listing_path(y) %>
+							<% else %>
+								<%= link_to image_tag(y.listing_images[0]), listing_path(y) %>	
+							<% end %>	
+							<div class="caption">
+			        			<h3><%= y.listing_name%></h3>
+			        			<p><%= y.description%></p>
+			        			<% if y.user_id == current_user.id %>
+									<p><%= link_to "edit listings", edit_listing_path(y), :class => "btn btn-primary"%></p>
+								<% end %>
+			        		</div>	
+						</div>
+					</div>
+				<% end %>
+			</div>
+		<%end%>
+
+	<% end %>
+</div>
+
+        
