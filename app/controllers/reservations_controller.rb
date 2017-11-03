@@ -5,8 +5,10 @@ class ReservationsController < ApplicationController
 
 	def new
 		@reservation = Reservation.new(reservation_params)
+		@listing = @reservation.listing
+		@duration = (@reservation.end_date - @reservation.start_date).to_i
 		@reservation.user_id = current_user.id
-		if @reservation.valid? && Reservation.validate(@reservation) 
+		if @reservation.valid? && @reservation.date_capacity_checker
 			render template: "reservations/new"
 		else
 			redirect_to listing_path(@reservation.listing.id)
@@ -45,9 +47,15 @@ class ReservationsController < ApplicationController
 
 	  if result.success?
 	    redirect_to user_path(current_user), :flash => { :success => "Transaction successful!" }
-	    reservation = params[:checkout_form][:reservation]
+	    reservation_number = params[:checkout_form][:reservation]
+	    reservation = Reservation.find(reservation_number)
 	    reservation.payment_status = true
 	    reservation.save
+	    user = reservation.user
+	    host = reservation.listing.user
+	    listing = reservation.listing
+	    ReservationJob.perform_later(user, host, listing)
+	    # ReservationMailer.booking_email(user, host, listing).deliver_later
 	  else
 	    redirect_to user_path(current_user), :flash => { :error => "Transaction failed. Please try again." }
 	  end

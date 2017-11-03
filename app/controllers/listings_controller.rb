@@ -1,6 +1,8 @@
 class ListingsController < ApplicationController
 	def index
-		if params[:search]
+		if params[:search] && params[:start_date] && params[:end_date]
+    		@listing = Listing.search_with_date(params[:search], params[:start_date], params[:end_date]).where(approval_status: true).order("created_at DESC").paginate(:page => params[:page], :per_page => 8)
+    	elsif params[:search]
     		@listing = Listing.search(params[:search]).where(approval_status: true).order("created_at DESC").paginate(:page => params[:page], :per_page => 8)
   		else  
 			@listing = Listing.order("created_at DESC").where(approval_status: true).paginate(:page => params[:page], :per_page => 8)
@@ -14,7 +16,7 @@ class ListingsController < ApplicationController
 
 	def create
 		@listing = current_user.listings.new(listing_params)
-		if @listing.save && @listing.valid
+		if @listing.save && @listing.valid?
 			redirect_to "/listings"
 		else
 			render template: "listings/new"
@@ -33,10 +35,8 @@ class ListingsController < ApplicationController
 	def update
 		current_listing
 		if @listing.update(listing_params)
-  			redirect_to "/listings/#{@listing.id}"
-  		else
-  			redirect_to "/listings/#{@listing.id}/edit"
   		end
+  			redirect_to "/listings/#{@listing.id}/edit"
 	end
 
 	def destroy
@@ -51,7 +51,8 @@ class ListingsController < ApplicationController
       		current_listing
       		@listing.approval_status = true
       		@listing.save
-      		redirect_to current_user
+      		redirect_to super_admin_path(current_user)
+      		flash[:success] = "Listing have been approved."
       	end
 	end
 

@@ -1,1 +1,9 @@
-<%= render 'form' %>
+<div class = "container">
+	<% if @listing.listing_images.length == 0 %>
+		<h1>There are currently no images</h1>
+	<% else %>
+		<%= image_tag @listing.listing_images[0].thumb %>
+	<% end %>
+	<%= render 'form' %>
+	<%= link_to "View Listing", listing_path(@listing), class: "btn btn-primary" %>
+</div>

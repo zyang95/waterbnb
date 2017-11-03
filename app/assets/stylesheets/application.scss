@@ -53,6 +53,13 @@ a:hover {
 }
 
 
+.field_with_errors {
+  padding: 2px;
+  font-weight: bold;
+  font-size: 15px;
+  color: red;
+}
+
 
 .waterbnb_button {
 	width: 15px;
@@ -128,4 +135,6 @@ a:hover {
 	border: 1px solid black;
 	padding: 10%;
 }
+
+
 

@@ -12,8 +12,9 @@
 
   <%= form.hidden_field "payment_method_nonce" %>
   <% reservation = Reservation.find(params[:id])%>
-  <%= form.hidden_field :ammount, value: "#{reservation.listing.price}" %>
-  <%= form.hidden_field :reservation, value: "#{reservation}" %>
+  <% duration = (reservation.end_date - reservation.start_date).to_i %>
+  <%= form.hidden_field :ammount, value: "#{reservation.listing.price * duration}" %>
+  <%= form.hidden_field :reservation, value: "#{reservation.id}" %>
 
   <div class="button-container">
   <%= form.submit "Purchase", disabled: false, class: "btn btn-primary", id: "submit-payment-btn" %>

@@ -1,5 +1,7 @@
 <div class = container>
-	<h1>Homes</h1>
+	<div class="page-header">
+		<h2>Homes</h2>
+	</div>
 	<% if @listing.present? %>
 		<% @listing.each_slice(4) do |x| %>
 			<div class = 'row'>
@@ -30,8 +32,6 @@
 	<% else %>
   		<p>There are no listings containing the term(s) <%= params[:search] %>.</p>
 	<% end %>
-
-
 
 
 </div>

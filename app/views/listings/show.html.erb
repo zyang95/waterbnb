@@ -17,12 +17,6 @@
 
         <% if signed_in? %>
           <div class="col-md-3">
-            <% if @listing.user_id == current_user.id %>
-              <%= link_to "edit listings", edit_listing_path, :class => "waterbnb_button"%>
-            <% end %>
-          </div>
-
-          <div class="col-md-3">
             <% if !current_user.customer? && @listing.approval_status == false %>
               <%= link_to "Approve", approve_path(params[:id]), :class => "waterbnb_button"%>
             <% end %>
@@ -76,12 +70,12 @@
           <% @listing.listing_images.each do |t|%>
             <% if number == 0%>
               <div class="item active">
-                <%= image_tag t.jumbo %>
+                <%= image_tag t.thumb %>
               </div>
               <% number += 1%>
             <% else %>
               <div class="item">
-                <%= image_tag t.jumbo %>
+                <%= image_tag t.thumb %>
               </div>
             <% end %>
           <% end %>
@@ -102,7 +96,7 @@
 
   <div class = "subcontainer-2">
     <div class = "subcontainer-2-box">
-      <h3 id = "subcontainer-2-header">RM <%= @listing.price%> per night</h3>
+      <h3 id = "subcontainer-2-header">USD $<%= @listing.price%> per night</h3>
       <div class = "sub-box-line"></div>
       <%= render "reservations/form" %>
       <h3><%= @error %></h3>

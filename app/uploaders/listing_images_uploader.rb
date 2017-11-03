@@ -2,10 +2,10 @@ class ListingImagesUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
 
-  process resize_to_fit: [800, 800]
+  process resize_to_fill: [100, 100]
 
   version :thumb do
-    process resize_to_fit: [400,400]
+    process resize_to_fill: [200,200]
   end
 # 
   version :jumbo do 

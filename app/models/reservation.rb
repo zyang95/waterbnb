@@ -2,23 +2,27 @@ class Reservation < ApplicationRecord
 	belongs_to :user
 	belongs_to :listing
 
-	validates :listing, uniqueness: { scope: :start_date, message: "there can be no two bookings on the same date" }
     validates :start_date, 		 presence: true
     validates :end_date, 		 presence: true
     validates :number_of_guests, presence: true
 
-    def self.validate(reservation)
-    	@dates = Reservation.all
-    	@capacity = Listing.find(reservation.listing_id).capacity
+    def date_capacity_checker
+    	@dates = Reservation.all.where(listing_id: self.listing_id).where(payment_status: true)
+    	@capacity = Listing.find(self.listing_id).capacity
     	@dates.each do |t|
-    		if (t.start_date < reservation.start_date  && reservation.start_date <= t.end_date) && 
-    			(t.start_date <= reservation.end_date && reservation.end_date < t.end_date) &&
-    			reservation.number_of_guests < @capacity
+    		if (t.start_date < self.start_date  && self.start_date <= t.end_date) && 
+    			(t.start_date <= self.end_date && self.end_date < t.end_date) &&
+    			self.number_of_guests < @capacity
     			return false
-    		else
-    			return true
-    		end
+            end
     	end
+        return true
     end
+
+    def check_payment_status
+        return false if self.payment_status == true
+    end
+
+    validate :check_payment_status, on: [:create, :update]
 
 end

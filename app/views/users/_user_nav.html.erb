@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><%= link_to 'Profile', user_path(current_user.id) %></li>
+  <li role="presentation"><%= link_to 'Listings', user_listings_path(current_user.id) %></li>
+  <li role="presentation"><%= link_to 'Reservations', user_reservations_path(current_user.id) %></li>
+</ul>
